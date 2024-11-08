@@ -1,0 +1,10 @@
+**/**/node_modules
+**/**/.next
+**/**/public
+**/**/.turbo
+
+*.lock
+*.log
+*.gitignore
+.prettierignore
+.DS_Store
