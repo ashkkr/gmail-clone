@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@prisma/client": "^5.22.0"
+    "@prisma/client": "5.22.0"
   },
   "devDependencies": {
     "prisma": "^5.22.0"

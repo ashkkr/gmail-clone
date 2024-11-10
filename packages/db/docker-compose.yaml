@@ -2,18 +2,18 @@ services:
   postgres:
     image: postgres
     ports:
-      - "5450:5432"
+      - '5450:5432'
     restart: no
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: ""
-      POSTGRES_DB: "gmail_clone"
+      POSTGRES_PASSWORD: ''
+      POSTGRES_DB: 'gmail_clone'
       POSTGRES_HOST_AUTH_METHOD: trust
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
-      interval: 2m
+      test: ['CMD-SHELL', 'pg_isready']
+      interval: 30s
       timeout: 10s
-      retries: 3
+      retries: 2
 volumes:
   db_data:
