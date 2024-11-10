@@ -1,9 +1,9 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
-  transpilePackages: ["@repo/ui"],
+  transpilePackages: ['@repo/ui', '@repo/db'],
 };
 
 export default nextConfig;
