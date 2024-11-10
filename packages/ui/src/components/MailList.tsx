@@ -4,7 +4,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-} from '@mui/material';
+} from "@mui/material";
 
 type EmailPreview = {
   senderName: string;
@@ -14,14 +14,14 @@ type EmailPreview = {
 
 const dummyEmails: EmailPreview[] = [
   {
-    senderName: 'Ram Singh',
-    contentPreview: 'Hey this is an invitation for my wedding',
+    senderName: "Ram Singh",
+    contentPreview: "Hey this is an invitation for my wedding",
     isRead: false,
   },
   {
-    senderName: 'Samuel',
+    senderName: "Samuel",
     contentPreview:
-      'Hey what about the meeting that was happening yesterday evening',
+      "Hey what about the meeting that was happening yesterday evening",
     isRead: false,
   },
 ];
