@@ -26,12 +26,12 @@ model User {
 }
 
 model Email {
-  id           Int      @unique @default(autoincrement())
-  subject      String
-  body         String
-  to_email     User     @relation("received", references: [id], fields: [to_user_id])
-  to_user_id   Int
-  from_email   User     @relation("sent", references: [id], fields: [from_user_id])
-  from_user_id Int
-  createdAt    DateTime @default(now())
+  id         Int      @unique @default(autoincrement())
+  subject    String
+  body       String
+  toUser     User     @relation("received", references: [id], fields: [toUserId])
+  toUserId   Int
+  fromUser   User     @relation("sent", references: [id], fields: [fromUserId])
+  fromUserId Int
+  createdAt  DateTime @default(now())
 }
