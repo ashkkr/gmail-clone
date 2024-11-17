@@ -1,44 +1,35 @@
 import {
   Paper,
+  Table,
   TableBody,
   TableCell,
   TableContainer,
   TableRow,
 } from "@mui/material";
 
-type EmailPreview = {
-  senderName: string;
-  contentPreview: string;
-  isRead: boolean;
+export type MailListProps = {
+  id: number | string;
+  subject: string;
+  body: string;
+  createdAt: string;
 };
 
-const dummyEmails: EmailPreview[] = [
-  {
-    senderName: "Ram Singh",
-    contentPreview: "Hey this is an invitation for my wedding",
-    isRead: false,
-  },
-  {
-    senderName: "Samuel",
-    contentPreview:
-      "Hey what about the meeting that was happening yesterday evening",
-    isRead: false,
-  },
-];
-
-export function MailList() {
+export function MailList({ emails }: { emails: MailListProps[] }) {
   return (
     <TableContainer component={Paper}>
-      <TableBody>
-        {dummyEmails.map((email) => {
-          return (
-            <TableRow>
-              <TableCell>{email.senderName}</TableCell>
-              <TableCell>{email.contentPreview}</TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
+      <Table>
+        <TableBody>
+          {emails.map((email) => {
+            return (
+              <TableRow key={email.id}>
+                <TableCell>{email.subject}</TableCell>
+                <TableCell>{email.body}</TableCell>
+                <TableCell>{email.createdAt}</TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
     </TableContainer>
   );
 }
