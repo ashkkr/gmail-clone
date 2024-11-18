@@ -10,7 +10,6 @@ export default function Home({ emails }: { emails: MailListProps[] }) {
       <div>
         <MailList emails={emails}></MailList>
       </div>
-      <button>Create User</button>
     </div>
   );
 }

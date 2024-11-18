@@ -1,35 +1,71 @@
 import {
+  Checkbox,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
   TableContainer,
+  TableHead,
+  TablePagination,
   TableRow,
 } from "@mui/material";
+import { useState } from "react";
 
 export type MailListProps = {
-  id: number | string;
+  id: number;
   subject: string;
   body: string;
   createdAt: string;
 };
 
 export function MailList({ emails }: { emails: MailListProps[] }) {
+  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  const [page, setPage] = useState(0);
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableBody>
-          {emails.map((email) => {
-            return (
-              <TableRow key={email.id}>
-                <TableCell>{email.subject}</TableCell>
-                <TableCell>{email.body}</TableCell>
-                <TableCell>{email.createdAt}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Paper>
+      <TableContainer component={Paper}>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Checkbox></Checkbox>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {emails.map((emailRow) => {
+              const rowSelected = selectedRows.includes(emailRow.id);
+              return (
+                <TableRow
+                  key={emailRow.id}
+                  sx={{ cursor: "pointer" }}
+                  selected={rowSelected}
+                >
+                  <TableCell>
+                    <Checkbox size="small" checked={rowSelected}></Checkbox>
+                  </TableCell>
+                  <TableCell>Sender Name</TableCell>
+                  <TableCell>{emailRow.subject}</TableCell>
+                  <TableCell>{emailRow.body}</TableCell>
+                  <TableCell>{emailRow.createdAt}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[-1]}
+        component="div"
+        count={emails.length}
+        rowsPerPage={10}
+        page={page}
+        onPageChange={(event, page) => {
+          setPage(page);
+        }}
+        onRowsPerPageChange={() => {}}
+      />
+    </Paper>
   );
 }
