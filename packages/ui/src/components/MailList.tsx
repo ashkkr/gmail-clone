@@ -10,7 +10,7 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export type MailListProps = {
   id: number;
@@ -22,6 +22,15 @@ export type MailListProps = {
 export function MailList({ emails }: { emails: MailListProps[] }) {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [page, setPage] = useState(0);
+  const rowsPerPage = 10;
+
+  const visibleEmails = useMemo(() => {
+    return [...emails].slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage,
+    );
+  }, [emails, page]);
+
   return (
     <Paper>
       <TableContainer component={Paper}>
@@ -34,7 +43,7 @@ export function MailList({ emails }: { emails: MailListProps[] }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {emails.map((emailRow) => {
+            {visibleEmails.map((emailRow) => {
               const rowSelected = selectedRows.includes(emailRow.id);
               return (
                 <TableRow
@@ -56,15 +65,14 @@ export function MailList({ emails }: { emails: MailListProps[] }) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[-1]}
+        rowsPerPageOptions={[rowsPerPage]}
         component="div"
         count={emails.length}
-        rowsPerPage={10}
+        rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={(event, page) => {
           setPage(page);
         }}
-        onRowsPerPageChange={() => {}}
       />
     </Paper>
   );
