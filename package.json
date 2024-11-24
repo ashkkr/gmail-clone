@@ -16,8 +16,12 @@
     "node": ">=18"
   },
   "packageManager": "yarn@1.22.22",
-  "workspaces": [
+  "workspaces": {
+    "packages": [
     "apps/*",
     "packages/*"
-  ]
+  ], "nohoist": [
+    "db/@prisma/client",
+    "db/@prisma/client/**"
+  ]}
 }

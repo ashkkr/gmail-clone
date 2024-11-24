@@ -1,20 +1,20 @@
 import { Box, TextField } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+import { forwardRef, Ref } from "react";
+import type { UseFormRegisterReturn } from "react-hook-form";
 
-export type ToEmailAddressProps = {
-  emailValue: string;
-  setToEmailAddress: Dispatch<SetStateAction<string>>;
+type ToEmailAddressProps = {
+  emailAddressRegister: UseFormRegisterReturn<string>;
 };
 
-export function ToEmailAddress(props: ToEmailAddressProps) {
+export const ToEmailAddress = (props: ToEmailAddressProps) => {
+  const { emailAddressRegister } = props;
   return (
     <Box>
       <TextField
         label={"Recipient Email Address"}
         sx={{ width: "100%" }}
-        value={props.emailValue}
-        onChange={(e) => props.setToEmailAddress(e.target.value)}
+        {...emailAddressRegister}
       ></TextField>
     </Box>
   );
-}
+};

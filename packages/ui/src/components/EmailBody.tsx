@@ -1,12 +1,13 @@
 import { Box, TextField } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 export type EmailBodyProps = {
-  emailBodyValue: string;
-  setEmailBody: Dispatch<SetStateAction<string>>;
+  emailBodyRegister: UseFormRegisterReturn<string>;
 };
 
 export function EmailBody(props: EmailBodyProps) {
+  const { emailBodyRegister } = props;
   return (
     <Box>
       <TextField
@@ -16,8 +17,7 @@ export function EmailBody(props: EmailBodyProps) {
         placeholder="Write your email..."
         rows={15}
         sx={{ width: "100%" }}
-        value={props.emailBodyValue}
-        onChange={(e) => props.setEmailBody(e.target.value)}
+        {...emailBodyRegister}
       ></TextField>
     </Box>
   );
