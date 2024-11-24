@@ -1,10 +1,12 @@
 import {
   EmailBody,
   EmailComposeWrapper,
+  EmailStatusSnackbar,
   EmailSubject,
   SendEmailButton,
   ToEmailAddress,
 } from "@repo/ui";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -20,6 +22,8 @@ export default function ComposeMail() {
     register,
     formState: { errors },
   } = useForm<IComposeEmail>();
+  const [showMessage, setShowMessage] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const emailAddressRegister = register("toEmailAddress", {
     required: true,
@@ -27,8 +31,30 @@ export default function ComposeMail() {
   });
   const emailSubjectRegiser = register("emailSubject");
   const emailBodyRegister = register("emailBody");
-  const onSubmit: SubmitHandler<IComposeEmail> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IComposeEmail> = async (emailContent) => {
+    try {
+      const response = await axios.post("/api/sendemail", emailContent, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = response.data;
+
+      if (!("message" in data)) {
+        throw new Error("Response did not contain message");
+      }
+
+      setSnackbarMessage(String(data.message));
+      setShowMessage(true);
+    } catch (e) {
+      console.error(e);
+      if (e instanceof AxiosError) {
+        setSnackbarMessage(String(e.response?.data?.message) ?? e.message);
+      } else {
+        setSnackbarMessage("Something went wrong");
+      }
+      setShowMessage(true);
+    }
   };
 
   return (
@@ -45,6 +71,11 @@ export default function ComposeMail() {
           <SendEmailButton></SendEmailButton>
         </EmailComposeWrapper>
       </form>
+      <EmailStatusSnackbar
+        isOpen={showMessage}
+        setIsOpen={setShowMessage}
+        message={snackbarMessage}
+      ></EmailStatusSnackbar>
     </div>
   );
 }

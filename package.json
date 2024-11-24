@@ -21,7 +21,7 @@
     "apps/*",
     "packages/*"
   ], "nohoist": [
-    "db/@prisma/client",
-    "db/@prisma/client/**"
+    "@prisma/client",
+    "@prisma/client/**"
   ]}
 }

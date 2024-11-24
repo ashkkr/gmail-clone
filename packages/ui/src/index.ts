@@ -5,3 +5,4 @@ export * from "./components/EmailBody";
 export * from "./components/EmailSubject";
 export * from "./components/EmailComposeWrapper";
 export * from "./components/SendEmailButton";
+export * from "./components/EmailStatusSnackbar";
