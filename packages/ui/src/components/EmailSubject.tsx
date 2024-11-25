@@ -4,10 +4,12 @@ import { UseFormRegisterReturn } from "react-hook-form";
 
 export type EmailSubjectProps = {
   emailSubjectRegister: UseFormRegisterReturn<string>;
+  isError: boolean;
+  errorMessage?: string;
 };
 
 export function EmailSubject(props: EmailSubjectProps) {
-  const { emailSubjectRegister } = props;
+  const { emailSubjectRegister, isError, errorMessage } = props;
   return (
     <Box>
       <TextField
@@ -15,6 +17,8 @@ export function EmailSubject(props: EmailSubjectProps) {
         placeholder="Enter your subject here"
         sx={{ width: "100%" }}
         {...emailSubjectRegister}
+        error={isError}
+        helperText={errorMessage}
       ></TextField>
     </Box>
   );

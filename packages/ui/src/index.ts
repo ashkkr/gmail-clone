@@ -6,3 +6,5 @@ export * from "./components/EmailSubject";
 export * from "./components/EmailComposeWrapper";
 export * from "./components/SendEmailButton";
 export * from "./components/EmailStatusSnackbar";
+export * from "./components/BackToInboxButton";
+export * from "./components/TestText";
