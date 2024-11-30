@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom";
-import { getByLabelText, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Home from "@/pages/home/[userid]";
-import { Email } from "@repo/db";
 import { MailListProps } from "@repo/ui";
 
 describe("Homepage", () => {
