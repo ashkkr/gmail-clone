@@ -5,13 +5,12 @@ import {
   EmailStatusSnackbar,
   EmailSubject,
   SendEmailButton,
-  TestText,
   ToEmailAddress,
 } from "@repo/ui";
 import axios, { AxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IComposeEmail {
@@ -53,8 +52,6 @@ export default function ComposeMail() {
   const emailBodyRegister = register("emailBody", {
     required: "Email body is required",
   });
-
-  const delay = (ms: number) => new Promise((res) => setTimeout(res, 5000));
 
   const onSubmit: SubmitHandler<IComposeEmail> = async (emailContent) => {
     try {

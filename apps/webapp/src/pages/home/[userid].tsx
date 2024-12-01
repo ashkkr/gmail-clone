@@ -1,14 +1,48 @@
 import prisma, { Email } from "@repo/db";
 import { MailList, SearchMail, MailListProps } from "@repo/ui";
+import axios from "axios";
+import { useRouter } from "next/router";
 
-export default function Home({ emails }: { emails: MailListProps[] }) {
+export default function Home({
+  emails,
+  params,
+}: {
+  emails: MailListProps[];
+  params: Promise<{ userid: string }>;
+}) {
+  const router = useRouter();
+  const userId = router.query.userid;
+  const handleMarkAsRead = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    emailIds: readonly number[],
+  ) => {
+    try {
+      const response = await axios.post(
+        "/api/markemailsread",
+        { emailIds, userId },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      const data = response.data;
+      console.log(data.message);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div>
       <div>
         <SearchMail></SearchMail>
       </div>
       <div>
-        <MailList emails={emails}></MailList>
+        <MailList
+          emails={emails}
+          handleMarkAsRead={handleMarkAsRead}
+        ></MailList>
       </div>
     </div>
   );

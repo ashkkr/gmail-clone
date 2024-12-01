@@ -34,4 +34,5 @@ model Email {
   fromUser   User     @relation("sent", references: [id], fields: [fromUserId])
   fromUserId Int
   createdAt  DateTime @default(now())
+  isRead     Boolean  @default(false)
 }
