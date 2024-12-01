@@ -1,7 +1,10 @@
+import { handleMarkAsReadApiCall } from "@/utils/axios_services";
+import { getTimeSince } from "@/utils/general";
 import prisma, { Email } from "@repo/db";
 import { MailList, SearchMail, MailListProps } from "@repo/ui";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function Home({
   emails,
@@ -12,22 +15,29 @@ export default function Home({
 }) {
   const router = useRouter();
   const userId = router.query.userid;
+  const [emailsState, setEmailsState] =
+    useState<readonly MailListProps[]>(emails);
+
   const handleMarkAsRead = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     emailIds: readonly number[],
   ) => {
     try {
-      const response = await axios.post(
-        "/api/markemailsread",
-        { emailIds, userId },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-      const data = response.data;
-      console.log(data.message);
+      const data = await handleMarkAsReadApiCall(emailIds, Number(userId));
+
+      let updatedEmails: readonly MailListProps[] = emailsState.map((email) => {
+        if (emailIds.includes(email.id)) {
+          return {
+            ...email,
+            isRead: true,
+          };
+        } else
+          return {
+            ...email,
+          };
+      });
+      console.log(updatedEmails.length);
+      setEmailsState(updatedEmails);
     } catch (e) {
       console.error(e);
     }
@@ -40,7 +50,7 @@ export default function Home({
       </div>
       <div>
         <MailList
-          emails={emails}
+          emails={emailsState}
           handleMarkAsRead={handleMarkAsRead}
         ></MailList>
       </div>
@@ -61,11 +71,13 @@ export async function getServerSideProps(context: any) {
     });
 
     const emailProps = emails.map((e): MailListProps => {
+      const createdSince = getTimeSince(new Date(e.createdAt));
       return {
         id: e.id,
         subject: e.subject,
         body: e.body,
-        createdAt: e.createdAt.toISOString(),
+        createdAt: createdSince,
+        isRead: e.isRead,
       };
     });
     return {

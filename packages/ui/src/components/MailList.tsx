@@ -13,23 +13,27 @@ import {
 } from "@mui/material";
 import { useMemo, useState } from "react";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
+import { grey } from "@mui/material/colors";
 
 export type MailListProps = {
   id: number;
   subject: string;
   body: string;
   createdAt: string;
+  isRead: boolean;
 };
 
 export function MailList({
   emails,
   handleMarkAsRead,
+  isSentBox = false,
 }: {
-  emails: MailListProps[];
+  emails: readonly MailListProps[];
   handleMarkAsRead: (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     emailIds: readonly number[],
   ) => void;
+  isSentBox?: boolean;
 }) {
   const [selectedRows, setSelectedRows] = useState<readonly number[]>([]);
   const [page, setPage] = useState(0);
@@ -79,19 +83,24 @@ export function MailList({
                 ></Checkbox>
               </TableCell>
               <TableCell>
-                <IconButton onClick={(e) => handleMarkAsRead(e, selectedRows)}>
-                  <MarkEmailReadIcon />
-                </IconButton>
+                {!isSentBox && (
+                  <IconButton
+                    onClick={(e) => handleMarkAsRead(e, selectedRows)}
+                  >
+                    <MarkEmailReadIcon />
+                  </IconButton>
+                )}
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {visibleEmails.map((emailRow) => {
               const rowSelected = selectedRows.includes(emailRow.id);
+              const RowColor = emailRow.isRead ? "white" : grey[300];
               return (
                 <TableRow
                   key={emailRow.id}
-                  sx={{ cursor: "pointer" }}
+                  sx={{ cursor: "pointer", backgroundColor: RowColor }}
                   selected={rowSelected}
                 >
                   <TableCell>
