@@ -2,17 +2,10 @@ import { handleMarkAsReadApiCall } from "@/utils/axios_services";
 import { getTimeSince } from "@/utils/general";
 import prisma, { Email } from "@repo/db";
 import { MailList, SearchMail, MailListProps } from "@repo/ui";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-export default function Home({
-  emails,
-  params,
-}: {
-  emails: MailListProps[];
-  params: Promise<{ userid: string }>;
-}) {
+export default function Home({ emails }: { emails: MailListProps[] }) {
   const router = useRouter();
   const userId = router.query.userid;
   const [emailsState, setEmailsState] =

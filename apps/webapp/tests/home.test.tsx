@@ -2,8 +2,18 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import Home from "@/pages/home/[userid]";
 import { MailListProps } from "@repo/ui";
+jest.mock("next/router", () => {
+  return {
+    useRouter: jest.fn(),
+  };
+});
+import { useRouter } from "next/router";
 
 describe("Homepage", () => {
+  beforeEach(() => {
+    // @ts-ignore
+    jest.mocked(useRouter).mockReturnValue({ query: { userid: 6 } });
+  });
   it("should render a search box with a label", () => {
     render(<Home emails={[]} />);
 
@@ -28,6 +38,7 @@ describe("Homepage", () => {
         subject: "subject",
         body: "this is an imp email",
         createdAt: "2024-01-01",
+        isRead: false,
       },
     ];
     render(<Home emails={mockEmails} />);

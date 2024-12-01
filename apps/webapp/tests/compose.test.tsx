@@ -29,7 +29,6 @@ describe("compose email page", () => {
     render(<ComposeMail />);
 
     const sendButton = screen.getByRole("button", { name: "Send" });
-    screen.debug();
     expect(sendButton).toBeInTheDocument();
     expect(sendButton).toBeEnabled();
   });
