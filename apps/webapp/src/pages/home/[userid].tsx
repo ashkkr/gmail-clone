@@ -50,6 +50,7 @@ export default function Home({ emails }: { emails: MailListProps[] }) {
     </div>
   );
 }
+Home.Auth = true;
 
 export async function getServerSideProps(context: any) {
   try {
